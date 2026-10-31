@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LLM-Welt – Wie Sprachmodelle denken</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+<canvas id="scene"></canvas>
+
+<!-- Startbildschirm -->
+<div id="splash">
+  <div class="splash-inner">
+    <div class="splash-orb"></div>
+    <h1>LLM<span>·</span>WELT</h1>
+    <p class="splash-sub">Eine begehbare Reise ins Innere eines Sprachmodells.<br>Verfolge, wie aus deinem Satz Tokens, Vektoren, Aufmerksamkeit – und schließlich das nächste Wort werden.</p>
+    <button id="enter" disabled>Welt wird geladen …</button>
+    <p id="splash-status" class="splash-status"></p>
+    <ul class="splash-keys">
+      <li><b>Ziehen</b> drehen</li><li><b>Rechtsklick</b> verschieben</li><li><b>Scrollen</b> zoomen</li><li><b>0–8</b> Stationen</li><li><b>Leertaste</b> nächstes Token</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Navigation -->
+<header id="topbar">
+  <div class="logo">LLM<span>·</span>WELT</div>
+  <nav id="nav"></nav>
+  <button id="autotour" class="chip" title="Stationen automatisch nacheinander besuchen">▶ Auto-Tour</button>
+</header>
+
+<!-- Erklär-Panel -->
+<aside id="panel">
+  <button id="panel-toggle" title="Panel ein-/ausklappen">⟩</button>
+  <div class="panel-head">
+    <div class="panel-num" id="panel-num">0</div>
+    <div>
+      <h2 id="panel-title">Parameter-Kern</h2>
+      <p id="panel-sub"></p>
+    </div>
+  </div>
+  <div id="panel-body" class="panel-body"></div>
+  <div class="panel-foot">
+    <button id="prev" class="chip">← Zurück</button>
+    <button id="overview" class="chip" title="Vogelperspektive">◎ Übersicht</button>
+    <button id="next" class="chip primary">Weiter →</button>
+  </div>
+</aside>
+
+<!-- Prompt-Leiste -->
+<footer id="promptbar">
+  <div class="prompt-row">
+    <input id="prompt" type="text" maxlength="120" value="Die Katze sitzt auf der" spellcheck="false" aria-label="Prompt">
+    <button id="apply" class="chip" title="Prompt übernehmen (Enter)">Übernehmen</button>
+    <button id="step" class="chip primary" title="Ein Token erzeugen (Leertaste)">▶ Nächstes Token</button>
+    <button id="sentence" class="chip" title="Weiter generieren bis zum Satzende">⏩ Satz</button>
+    <label class="follow" title="Kamera fliegt mit dem Datenkometen mit"><input id="follow" type="checkbox" checked> Kamera folgt</label>
+  </div>
+  <div id="output" class="output"></div>
+</footer>
+
+<div id="tooltip"></div>
+<div id="toast"></div>
+
+<script type="module" src="js/main.js"></script>
+<script>
+  // Fallback, falls Module (three.js über CDN) nicht laden.
+  setTimeout(function () {
+    if (!window.__llmWorldReady) {
+      var s = document.getElementById('splash-status');
+      if (s && !s.textContent) s.textContent = 'Lädt ungewöhnlich lange … three.js wird von cdn.jsdelivr.net geladen – besteht eine Internetverbindung? Bei lokalem Öffnen bitte über einen kleinen Webserver starten (siehe README).';
+    }
+  }, 9000);
+</script>
+</body>
+</html>
